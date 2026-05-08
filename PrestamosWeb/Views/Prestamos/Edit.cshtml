@@ -1,0 +1,145 @@
+﻿@model PrestamosWeb.Models.Prestamo
+
+@{
+    ViewData["Title"] = "Editar Préstamo";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Editar Préstamo</h3>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-action="Edit" method="post">
+
+                <input type="hidden" asp-for="IdPrestamo" />
+
+                <div class="row">
+
+                    <!-- EMPLEADO -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Empleado</label>
+                        <select asp-for="IdEmpleado" class="form-select">
+                            @foreach (var item in ViewBag.Empleados)
+                            {
+                                <option value="@item.IdEmpleado">
+                                    @item.Nombres @item.Apellido1
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- AUTORIZA -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Autoriza</label>
+                        <select asp-for="IdAutoriza" class="form-select">
+                            @foreach (var item in ViewBag.Autoriza)
+                            {
+                                <option value="@item.IdEmpleado">
+                                    @item.Nombres @item.Apellido1
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- CANTIDAD -->
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">Cantidad Prestada</label>
+                        <input asp-for="CantidadTotalPrestada" class="form-control" />
+                    </div>
+
+                    <!-- TOTAL -->
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">Total a Pagar</label>
+                        <input asp-for="CantidadTotalAPagar" class="form-control" />
+                    </div>
+
+                    <!-- SALDO -->
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">Saldo</label>
+                        <input asp-for="Saldo" class="form-control" />
+                    </div>
+
+                    <!-- INTERÉS -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Interés Aprobado</label>
+                        <input asp-for="InteresAprobado" class="form-control" />
+                    </div>
+
+                    <!-- MORATORIO -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Interés Moratorio</label>
+                        <input asp-for="InteresMoratorio" class="form-control" />
+                    </div>
+
+                    <!-- TIPO PAGO -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Tipo Pago</label>
+                        <select asp-for="IdTipoPago" class="form-select">
+                            @foreach (var item in ViewBag.TiposPago)
+                            {
+                                <option value="@item.Id">
+                                    @item.NombreCorto
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- FECHA PRIMER -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Fecha Primer Pago</label>
+                        <input asp-for="FechaPrimerPago" type="date" class="form-control" />
+                    </div>
+
+                    <!-- ABONOS -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Abonado Capital</label>
+                        <input asp-for="TotalAbonadoCapital" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Abonado Intereses</label>
+                        <input asp-for="TotalAbonadoIntereses" class="form-control" />
+                    </div>
+
+                    <!-- FECHA FINAL -->
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-bold">Fecha Final Pago</label>
+                        <input asp-for="FechaFinalPago" type="date" class="form-control" />
+                    </div>
+
+                    <!-- NOTAS -->
+                    <div class="col-md-12 mb-3">
+                        <label class="fw-bold">Notas</label>
+                        <textarea asp-for="Notas"
+                                  rows="3"
+                                  class="form-control"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-3">
+
+                    <button type="submit"
+                            class="btn btn-warning px-5 me-2">
+                        Actualizar
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary px-5">
+                        Cancelar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

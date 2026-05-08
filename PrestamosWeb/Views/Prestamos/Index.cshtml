@@ -1,0 +1,139 @@
+﻿@model List<PrestamosWeb.Models.Prestamo>
+
+@{
+    ViewData["Title"] = "Préstamos";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="fw-bold text-primary">
+            Sistema de Préstamos
+        </h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            + Nuevo Préstamo
+        </a>
+        <a asp-action="Dashboard" class="btn btn-dark">
+            Dashboard
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover table-bordered align-middle">
+
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Empleado</th>
+                        <th>Autorizador</th>
+                        <th>TipoPago</th>
+                        <th>Prestado</th>
+                        <th>Total Pagar</th>
+                        <th>Saldo</th>
+                        <th>Notas</th>
+                        <th width="180">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.IdPrestamo</td>
+                            <td>@item.NombreEmpleado</td>
+                            <td>@item.NombreAutorizador</td>
+                            <td>@item.NombreTipoPago</td>
+                            <td>$ @item.CantidadTotalPrestada</td>
+                            <td>$ @item.CantidadTotalAPagar</td>
+                            <td>$ @item.Saldo</td>
+                            <td>@item.Notas</td>
+
+                            <td>
+                                <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.IdPrestamo"
+                                       class="btn btn-warning btn-sm">
+                                        Editar
+                                    </a>
+
+                                    <form asp-action="Delete" method="post"
+                                          onsubmit="return confirmarEliminar(event,this)">
+
+                                        <input type="hidden" name="id" value="@item.IdPrestamo" />
+
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@item.IdPrestamo"
+                                       class="btn btn-info btn-sm">
+                                        Detalle
+                                    </a>
+
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @if (TempData["success"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '@Html.Raw(TempData["success"])',
+                    confirmButtonColor: '#3085d6'
+                });
+            });
+        </script>
+    }
+
+    <script>
+        function confirmarEliminar(e, form) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Eliminar préstamo?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+
+            return false;
+        }
+    </script>
+
+}

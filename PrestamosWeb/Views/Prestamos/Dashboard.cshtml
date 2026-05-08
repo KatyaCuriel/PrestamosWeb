@@ -1,0 +1,147 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">Dashboard Financiero</h2>
+            <small class="text-muted">Resumen general de préstamos</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            Volver
+        </a>
+
+    </div>
+
+    <!-- KPIs -->
+    <div class="row g-3">
+
+        <!-- TOTAL PRÉSTAMOS -->
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow-lg border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Total Préstamos</h6>
+                            <h3>@Model.TotalPrestamos</h3>
+                        </div>
+                        <div style="font-size:2rem;">📊</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRESTADO -->
+        <div class="col-md-3">
+            <div class="card text-white bg-success shadow-lg border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Total Prestado</h6>
+                            <h4>$ @Model.TotalPrestado.ToString("N2")</h4>
+                        </div>
+                        <div style="font-size:2rem;">💰</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POR COBRAR -->
+        <div class="col-md-3">
+            <div class="card text-dark bg-warning shadow-lg border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Por Cobrar</h6>
+                            <h4>$ @Model.TotalPorCobrar.ToString("N2")</h4>
+                        </div>
+                        <div style="font-size:2rem;">⏳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SALDO -->
+        <div class="col-md-3">
+            <div class="card text-white bg-danger shadow-lg border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Saldo Global</h6>
+                            <h4>$ @Model.TotalSaldo.ToString("N2")</h4>
+                        </div>
+                        <div style="font-size:2rem;">📉</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECCIÓN GRÁFICO -->
+    <div class="row mt-4">
+
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white">
+                    Evolución (demo visual)
+                </div>
+                <div class="card-body">
+                    <canvas id="graficoPrestamos"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0">
+                <div class="card-header bg-secondary text-white">
+                    Resumen rápido
+                </div>
+                <div class="card-body">
+
+                    <p>✔ Sistema operativo</p>
+                    <p>✔ Préstamos activos</p>
+                    <p>✔ Historial registrado</p>
+                    <p>✔ Datos financieros consistentes</p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('graficoPrestamos');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Prestado', 'Por Cobrar', 'Saldo'],
+            datasets: [{
+                label: 'Montos',
+                data: [
+                    @Model.TotalPrestado,
+                    @Model.TotalPorCobrar,
+                    @Model.TotalSaldo
+                ],
+                backgroundColor: [
+                    'green',
+                    'orange',
+                    'red'
+                ]
+            }]
+        }
+    });
+</script>

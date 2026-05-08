@@ -1,0 +1,166 @@
+﻿@model PrestamosWeb.Models.Prestamo
+
+@{
+    ViewData["Title"] = "Detalle del Préstamo";
+    var historial = ViewBag.Historial as List<PrestamosWeb.Models.PrestamoHistorico>;
+}
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h3 class="fw-bold">
+            Préstamo #@Model.IdPrestamo
+        </h3>
+
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.IdPrestamo"
+               class="btn btn-warning">
+                Editar
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Regresar
+            </a>
+        </div>
+
+    </div>
+
+    <!-- INFO PRINCIPAL -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label class="text-muted">Empleado</label>
+                    <div class="fw-bold">@Model.IdEmpleado</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-muted">Prestado</label>
+                    <div class="fw-bold">@Model.CantidadTotalPrestada.ToString("N2")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-muted">Total a Pagar</label>
+                    <div class="fw-bold text-primary">
+                        @Model.CantidadTotalAPagar.ToString("N2")
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-muted">Saldo</label>
+                    <div class="fw-bold text-danger">
+                        @Model.Saldo.ToString("N2")
+                    </div>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label>Interés Aprobado</label>
+                    <div>@Model.InteresAprobado %</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Tipo Pago</label>
+                    <div>@Model.IdTipoPago</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Autoriza</label>
+                    <div>@Model.IdAutoriza</div>
+                </div>
+
+            </div>
+
+            <div class="mt-3">
+                <label>Notas</label>
+                <div>@Model.Notas</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- HISTORIAL -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Historial de Movimientos</h5>
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (historial != null && historial.Any())
+                    {
+                        foreach (var h in historial)
+                        {
+                            <tr>
+                                <td>
+                                    @h.FechaMovimiento.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @if (h.Accion == "INSERT")
+                                    {
+                                        <span class="badge bg-success">INSERT</span>
+                                    }
+                                    else if (h.Accion == "UPDATE")
+                                    {
+                                        <span class="badge bg-warning text-dark">UPDATE</span>
+                                    }
+                                    else if (h.Accion == "DELETE")
+                                    {
+                                        <span class="badge bg-danger">DELETE</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@h.Accion</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @h.Detalle
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted p-3">
+                                Sin historial de movimientos
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
