@@ -1,6 +1,6 @@
-# Sistema de Préstamos MVC
+# Sistema de PrÃ©stamos MVC
 
-## Tecnologías
+## TecnologÃ­as
 - ASP.NET Core MVC
 - C#
 - ADO.NET
@@ -8,11 +8,11 @@
 - Bootstrap
 
 ## Funcionalidades
-- CRUD de préstamos
+- CRUD de prÃ©stamos
 - Empleados
 - Tipos de pago
 - Historial de cambios
 - Dashboard financiero
 
 ## Autor
-Katya Curiel Jiménez
+Katya Curiel JimÃ©nez
